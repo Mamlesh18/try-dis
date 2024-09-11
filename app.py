@@ -26,7 +26,7 @@ def get_data():
 
 # Endpoint to handle DELETE requests by Load ID
 @app.route('/delete_data', methods=['DELETE'])
-def delete_data():
+def delete_data_one():
     load_id = request.args.get('load_id')  # Get the Load ID from query parameters
     if not load_id:
         return jsonify({'error': 'Load ID not provided'}), 400
@@ -42,7 +42,7 @@ def delete_data():
 
 
 @app.route('/delete_data_all', methods=['DELETE'])
-def delete_data():
+def delete_data_all():
     # Clear all data
     data_store.clear()
     return jsonify({'message': 'All data deleted successfully'}), 200
