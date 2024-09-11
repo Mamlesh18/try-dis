@@ -40,5 +40,12 @@ def delete_data():
     
     return jsonify({'message': 'Data deleted successfully'}), 200
 
+
+@app.route('/delete_data_all', methods=['DELETE'])
+def delete_data():
+    # Clear all data
+    data_store.clear()
+    return jsonify({'message': 'All data deleted successfully'}), 200
+
 if __name__ == '__main__':
     app.run(debug=True)
