@@ -24,12 +24,21 @@ def post_data():
 def get_data():
     return jsonify({'data': data_store}), 200
 
-# Endpoint to handle DELETE requests
+# Endpoint to handle DELETE requests by Load ID
 @app.route('/delete_data', methods=['DELETE'])
 def delete_data():
-    # Clear all data
-    data_store.clear()
-    return jsonify({'message': 'All data deleted successfully'}), 200
+    load_id = request.args.get('load_id')  # Get the Load ID from query parameters
+    if not load_id:
+        return jsonify({'error': 'Load ID not provided'}), 400
+    
+    global data_store
+    initial_len = len(data_store)
+    data_store = [item for item in data_store if item.get('Load ID') != load_id]
+    
+    if len(data_store) == initial_len:
+        return jsonify({'error': 'Load ID not found'}), 404
+    
+    return jsonify({'message': 'Data deleted successfully'}), 200
 
 if __name__ == '__main__':
     app.run(debug=True)
